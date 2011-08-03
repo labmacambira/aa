@@ -50,3 +50,35 @@ Configuration attributes currently in use:
     user.nickname
     user.email
     server.url
+
+Suggested Workflow
+==================
+
+A suggestion for your daily workflow on Lab Macambira:
+
+* Look at the tickets of your GT on https://sourceforge.net/apps/trac/labmacambira
+* Use AA
+    aa start
+    aa shout working on foo
+    aa stop
+    aa push
+* Use '''shout''' instead of '''post''' when you are connected to the Web
+* Open how many tickets your consider necessary to organize your actions
+* Keep atention to your GT milestones
+* Close the tickets you'll fixing
+* Use the wiki a lot to report your activities: http://wiki.nosdigitais.teia.org.br/Lab_Macambira
+* Use the mail list (listamacambira@teia.org.br) and IRC (#labmacambira at irc.freenode.net)
+
+Contributing
+============
+
+If you don't have permission as developer on the AA's SourceForge project,
+please send an email asking to labmacambira@teia.org.br.
+
+If you have permission, clone the repos:
+
+    git clone ssh://USERNAME@labmacambira.git.sourceforge.net/gitroot/labmacambira/AA
+
+Change USERNAME by your SourceForge username.
+
+For more information, take a look at http://wiki.nosdigitais.teia.org.br/Manual_do_Novato.
