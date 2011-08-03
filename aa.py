@@ -298,7 +298,7 @@ class AADaemon(Daemon):
         A simple wrapper to Ubuntu's notify-send.
         """
         os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
-        os.system('espeak "%s"' % msg)
+        os.system('espeak -v pt "%s"' % msg)
 
 #
 # AA HTTP Sender
