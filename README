@@ -77,7 +77,7 @@ please send an email asking to labmacambira@teia.org.br.
 
 If you have permission, clone the repos:
 
-    git clone ssh://USERNAME@labmacambira.git.sourceforge.net/gitroot/labmacambira/AA
+    git clone ssh://USERNAME@labmacambira.git.sourceforge.net/gitroot/labmacambira/aa
 
 Change USERNAME by your SourceForge username.
 
