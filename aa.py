@@ -39,6 +39,13 @@ Usage:
 Remember, you have to configure your nickname before start:
 
    aa config user.nickname <YOUR NICKNAME HERE>
+
+Workflow:
+             .-.
+             v |
+   start -> shout -> stop -> push
+             or
+            post
 """
 
 configuration = ConfigParser.RawConfigParser()
