@@ -21,6 +21,8 @@
 import sys, os, time, atexit, urllib, urllib2, json, io
 from signal import SIGTERM
 import ConfigParser
+from datetime import datetime
+
 
 guide = """
 _.__o_oOoOo[ AA ]oOoOo_o__._
@@ -110,6 +112,78 @@ def get(params):
         except ConfigParser.NoOptionError:
             pass
     return None
+
+#
+# Calcula timeslots dos logs
+#
+
+class Slotador():
+    """Classe para calcular timeslots dos logs
+    Para usar, instancie:
+        s = Slotador()
+    E pegue a lista dos numeros de slots ja respondidos
+        s.respondidos
+    Ex. dessa lista:
+        [1, 2, 4, 5]
+    Isso quer dizer que vc respondeu corretamente nos timeslots 1,2,4 e 5
+    Mas perdeu o 3
+    """
+
+    def __init__(self):
+        self.atualizar()
+
+    def atualizar(self):
+        """Recarrega logs e recalcula os timeslots"""
+        home = os.getenv('HOME')
+        f = open(home + '/.aa.log', 'r')
+        linhas = f.read().splitlines()
+        f.close()
+        mensagens = []
+        self.fim = None
+        for linha in linhas:
+            data, texto = linha.split(',', 1)
+            if texto != 'notify':
+                data = self.interpretar_data(data)
+                if texto == 'start':
+                    self.inicio = data
+                elif texto == 'stop':
+                    self.fim = data
+                else:
+                    mensagens.append((data, texto))
+
+        self.respondidos = []
+        for m in mensagens:
+            slot = self.timeslotar(m[0])
+            if slot != -1:
+                if slot not in self.respondidos:
+                    self.respondidos.append(slot)
+
+        if self.fim == None:
+            agora = datetime.now()
+        else:
+            agora = self.fim
+        agora = agora - self.inicio
+        minu = agora.total_seconds()/60.0
+        atual = int((minu-5)/15)
+        self.perdidos = []
+        for i in range(1,atual+1):
+            if i not in self.respondidos:
+                self.perdidos.append(i)
+
+    def interpretar_data(self, texto):
+        """Converte de string para date"""
+        return datetime.strptime(texto, '%Y-%m-%d %H-%M-%S')
+
+    def timeslotar(self, tempo):
+        """Dado um tempo qualquer, calcula em que timeslot eles caem"""
+        tempo = tempo - self.inicio
+        minu = tempo.total_seconds()/60.0
+        resto = minu%15
+        # A mensagem nao caiu em nenhum timeslot valido
+        if resto > 5.0 and resto < 10.0:
+            return -1
+        else:
+            return int(round((minu+0.1)/15,0))
 
 #
 # Generic Double-fork based Daemon
@@ -451,6 +525,17 @@ if __name__ == "__main__":
         # LOGVIEW
         elif args[0] in ['logview', 'viewlog']:
             os.system('less ' + os.getenv('HOME') + '/.aa.log')
+
+        # TIMESLOTS
+        elif args[0] in ['timeslots', 'ts', 'slots']:
+            s = Slotador()
+            print("Timeslots:")
+            print("respondidos: "+str(s.respondidos))
+            print("perdidos: "+str(s.perdidos))
+            if len(s.perdidos) == 0:
+                print("Muito bem! Agora continue trabalhando!")
+            else:
+                print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!")
 
         # PUSH
         elif args[0] in ['push']:
