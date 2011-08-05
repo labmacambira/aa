@@ -170,6 +170,14 @@ class Slotador():
             if i not in self.respondidos:
                 self.perdidos.append(i)
 
+    def atual_respondido(self):
+        """Retorna se o timeslot atual ja foi respondido"""
+        atual = self.timeslotar(datetime.now())
+        if atual != -1:
+            if atual not in self.respondidos:
+                return False
+        return True
+
     def interpretar_data(self, texto):
         """Converte de string para date"""
         return datetime.strptime(texto, '%Y-%m-%d %H-%M-%S')
@@ -341,6 +349,7 @@ class AADaemon(Daemon):
         inicio = time.time()
         atual = time.time()
         self.notify('Your session has started. Programming, modafoca! :-)')
+        s = Slotador()
         while True:
             tick = int(get(['user','tick']))
             prox_aviso_padrao = 10*60 + avisos_padroes * 15*60
@@ -352,21 +361,18 @@ class AADaemon(Daemon):
                 prox_aviso = prox_aviso_tick
                 avisos_tick += 1
             dormir = prox_aviso + inicio - atual
-            #self.logger.log('pad: '+str(prox_aviso_padrao))
-            #self.logger.log('tic: '+str(prox_aviso_tick))
-            #self.logger.log('prox: '+str(prox_aviso))
-            #self.logger.log('dormir: '+str(dormir))
-            #self.logger.log('ini-atu: '+str((inicio-atual)))
             if dormir > 0:
                 time.sleep(float(dormir))
                 atual = time.time()
                 minutos = int((atual-inicio)/60)
                 #segundos = int((atual-inicio)%60)
-                self.notify('Tick-tack... '+str(minutos)+\
-                            ' minutos' )
-                self.logger.log('notify') # precisamos notificar isso no log?
-                # FIXME: notificar a cada X minutos e informar quanto tempo falta
-                # FIXME: como verificar que o usuario logou? fica a cargo do servidor?
+                s.atualizar()
+                if not s.atual_respondido():
+                    self.notify('Tick-tack... '+str(minutos)+\
+                                ' minutos' )
+                    self.logger.log('notify') # precisamos notificar isso no log?
+                    # FIXME: notificar a cada X minutos e informar quanto tempo falta
+                    # FIXME: como verificar que o usuario logou? fica a cargo do servidor?
     def notify(self, msg):
         """
         A simple wrapper to Ubuntu's notify-send.
