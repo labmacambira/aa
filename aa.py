@@ -380,6 +380,13 @@ class AADaemon(Daemon):
         os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
         os.system('espeak -v pt "%s"' % msg)
 
+    def notify_english(self, msg):
+        """
+        variant of notify above, for english
+        """
+        os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
+        os.system('espeak "%s"' % msg)
+
 #
 # AA HTTP Sender
 #
@@ -561,7 +568,7 @@ if __name__ == "__main__":
             # send all the lines at ~/.aa.log file
             http_sender.send_log()
             # notify to the user the push action
-            daemon.notify('Session pushed to the server. Now get away of this fucking laptop and go fuck some pussies.')
+            daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck some pussies.')
             print '[AA] Session pushed to the server.'
                 
         # UNKNOWN OPTION
