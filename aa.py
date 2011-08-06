@@ -496,7 +496,11 @@ if __name__ == "__main__":
             daemon.stop()
 
         # ALERT
-        elif args[0] in ['alert', 'informa', 'marca', 'anota', 'msg', 'post'] and args[1]:
+        elif args[0] in ['alert', 'informa', 'marca', 'anota', 'msg', 'post']:
+            if len(args) < 2:
+              print '[AA] Please specify a message to post. Use: aa %s <message>'  % args[0]
+              sys.exit(0)
+
             # no matter if we use quotes or not after the "aa alert"
             msg = ''.join([pal+" " for pal in sys.argv[2:]])
             msg = msg.strip()
@@ -506,7 +510,11 @@ if __name__ == "__main__":
             print '[AA] New alert: "%s" logged.' % msg
 
         # SCREAM
-        elif args[0] in ['scream', 'say', 'oalert', 'shout'] and args[1]:
+        elif args[0] in ['scream', 'say', 'oalert', 'shout']:
+            if len(args) < 2:
+              print '[AA] Please specify a message to say. Use: aa %s <message>'  % args[0]
+              sys.exit(0)
+              
             msg = ''.join([pal+" " for pal in sys.argv[2:]])
             msg = msg.strip()
             # log a scream action
@@ -518,7 +526,10 @@ if __name__ == "__main__":
             print '[AA] New shout: "%s" logged.' % msg
 
         # CONFIG
-        elif args[0] in ['config', 'configura', 'seta'] and args[1]:
+        elif args[0] in ['config', 'configura', 'seta']:
+            if len(args) < 3:
+              print '[AA] Missing arguments. Use: aa %s <config> <value>'  % args[0]
+              sys.exit(0)
             config(sys.argv[2:])
 
         # STATUS
