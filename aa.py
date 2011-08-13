@@ -458,132 +458,156 @@ class AALogger:
         """
         self.log_file = open(self.log_filename, 'w')
 
+
+
+class Console():
+
+    def __init__(self):
+        # Creating the AA modules
+
+        # Here we create a logger obj to log every msg to the ~/.aa.log
+        self.logger = AALogger()
+
+        # And this module deals with the HTTP server
+        self.http_sender = AAHTTPSender()
+
+        # Here the daemon that notifies the user every N seconds
+        # /tmp/aad.pid has the PID of the forked daemon
+        self.daemon = AADaemon('/tmp/aad.pid')
+
+    def send_scream(self, msg):
+        # log a scream action
+        self.logger.log('shout ' + msg)
+        # send the msg to the HTTP server, so it'll be online imediatelly!
+        j = json.dumps([{'user': get(['user','nickname']), 'date': time.strftime("%Y-%m-%d %H-%M-%S"), 'log': 'shout ' + msg}])
+        self.http_sender.send(j)
+
+    def stop(self):
+        # log a stop session action
+        self.logger.log('stop')
+        # the daemon notifies that the session is finished
+        self.daemon.notify('Your session has finished. Dont forget to record your screencast.')
+        # kill the daemon
+        self.daemon.stop()
+
+    def daemon_running(self):
+        if self.daemon.getpid() is not None:
+            return True
+        else:
+            return False
+
+    def start(self):
+        init_config()
+        # checks if the user nickname is defined
+        if get(['user','nickname']) is '':
+            print '[AA] Please, set your nickname before start hacking. Use: aa config user.nickname <YOUR NICKNAME>.'
+            sys.exit(0)
+
+        # start the logger (overwrite or create the ~/.aa.log file)
+        self.logger.start()
+        # log a start session action
+        self.logger.log('start')
+        # fork the daemon and exit
+        self.daemon.start()
+
+    def process_args(self):
+        # Parsing console arguments
+        # FIXME: talvez usar o argparse?
+        args = sys.argv[1:]
+        if len(sys.argv) > 1:
+            # START
+            if args[0] in ['start', 'inicio', 'inicia', 'início', 'begin']:
+                self.start()
+                # inform to the user at console
+                print '[AA] Your session has started. Happy hacking!'
+
+            # STOP
+            elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
+                self.stop()
+                # inform to the user at console
+                print '[AA] Your session has finished. Dont forget to record your screencast.'
+
+            # ALERT
+            elif args[0] in ['alert', 'informa', 'marca', 'anota', 'msg', 'post']:
+                if len(args) < 2:
+                  print '[AA] Please specify a message to post. Use: aa %s <message>'  % args[0]
+                  sys.exit(0)
+
+                # no matter if we use quotes or not after the "aa alert"
+                msg = ''.join([pal+" " for pal in sys.argv[2:]])
+                msg = msg.strip()
+                # log a alert action
+                self.logger.log('alert ' + msg)
+                # inform the user
+                print '[AA] New alert: "%s" logged.' % msg
+
+            # SCREAM
+            elif args[0] in ['scream', 'say', 'oalert', 'shout']:
+                if len(args) < 2:
+                  print '[AA] Please specify a message to say. Use: aa %s <message>'  % args[0]
+                  sys.exit(0)
+                  
+                msg = ''.join([pal+" " for pal in sys.argv[2:]])
+                msg = msg.strip()
+                self.send_scream(msg)
+                # inform the user
+                print '[AA] New shout: "%s" logged.' % msg
+
+            # CONFIG
+            elif args[0] in ['config', 'configura', 'seta']:
+                if len(args) < 3:
+                  print '[AA] Missing arguments. Use: aa %s <config> <value>'  % args[0]
+                  sys.exit(0)
+                config(sys.argv[2:])
+
+            # STATUS
+            elif args[0] in ['status', 'st']:
+                if self.daemon_running():
+                    print '[AA] daemon is up and running... (pid: %s)' % self.daemon.getpid()
+                else:
+                    print '[AA] Oh nooo! daemon is not running... Get back to work!!!'
+
+            # LOGVIEW
+            elif args[0] in ['logview', 'viewlog']:
+                os.system('less ' + os.getenv('HOME') + '/.aa.log')
+
+            # TIMESLOTS
+            elif args[0] in ['timeslots', 'ts', 'slots', 'time']:
+                s = Slotador()
+                print("Trabalhando há: "+str(s.decorridos_m)+" minutos")
+                print("Faltam: "+str(s.faltam_m)+" minutos")
+                print("")
+                print("Timeslots:")
+                print("respondidos: "+str(s.respondidos))
+                print("perdidos: "+str(s.perdidos))
+                if len(s.perdidos) == 0:
+                    print("Muito bem! Agora continue trabalhando!")
+                else:
+                    print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!")
+
+            # PUSH
+            elif args[0] in ['push']:
+                # log a push action
+                self.logger.log('push')
+                # send all the lines at ~/.aa.log file
+                self.http_sender.send_log()
+                # notify to the user the push action
+                self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck some pussies.')
+                print '[AA] Session pushed to the server.'
+                    
+            # UNKNOWN OPTION
+            else:
+                print'[AA] Unknown option: "%s". Please, try again!' % args[0]
+                sys.exit(2)
+                sys.exit(0)
+        else:
+            print guide
+            sys.exit(2)
+
 #
 # Main Function (start here!)
 #
 
 if __name__ == "__main__":
-    # Creating the AA modules
-
-    # Here we create a logger obj to log every msg to the ~/.aa.log
-    logger = AALogger()
-
-    # And this module deals with the HTTP server
-    http_sender = AAHTTPSender()
-
-    # Here the daemon that notifies the user every N seconds
-    # /tmp/aad.pid has the PID of the forked daemon
-    daemon = AADaemon('/tmp/aad.pid')
-
-    # Parsing console arguments
-    # FIXME: talvez usar o argparse?
-    args = sys.argv[1:]
-    if len(sys.argv) > 1:
-        # START
-        if args[0] in ['start', 'inicio', 'inicia', 'início', 'begin']:
-            init_config()
-            # checks if the user nickname is defined
-            if get(['user','nickname']) is '':
-                print '[AA] Please, set your nickname before start hacking. Use: aa config user.nickname <YOUR NICKNAME>.'
-                sys.exit(0)
-
-            # start the logger (overwrite or create the ~/.aa.log file)
-            logger.start()
-            # log a start session action
-            logger.log('start')
-            # inform to the user at console
-            print '[AA] Your session has started. Happy hacking!'
-            # fork the daemon and exit
-            daemon.start()
-
-        # STOP
-        elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
-            # log a stop session action
-            logger.log('stop')
-            # the daemon notifies that the session is finished
-            daemon.notify('Your session has finished. Dont forget to record your screencast.')
-            # inform to the user at console
-            print '[AA] Your session has finished. Dont forget to record your screencast.'
-            # kill the daemon
-            daemon.stop()
-
-        # ALERT
-        elif args[0] in ['alert', 'informa', 'marca', 'anota', 'msg', 'post']:
-            if len(args) < 2:
-              print '[AA] Please specify a message to post. Use: aa %s <message>'  % args[0]
-              sys.exit(0)
-
-            # no matter if we use quotes or not after the "aa alert"
-            msg = ''.join([pal+" " for pal in sys.argv[2:]])
-            msg = msg.strip()
-            # log a alert action
-            logger.log('alert ' + msg)
-            # inform the user
-            print '[AA] New alert: "%s" logged.' % msg
-
-        # SCREAM
-        elif args[0] in ['scream', 'say', 'oalert', 'shout']:
-            if len(args) < 2:
-              print '[AA] Please specify a message to say. Use: aa %s <message>'  % args[0]
-              sys.exit(0)
-              
-            msg = ''.join([pal+" " for pal in sys.argv[2:]])
-            msg = msg.strip()
-            # log a scream action
-            logger.log('shout ' + msg)
-            # send the msg to the HTTP server, so it'll be online imediatelly!
-            j = json.dumps([{'user': get(['user','nickname']), 'date': time.strftime("%Y-%m-%d %H-%M-%S"), 'log': 'shout ' + msg}])
-            http_sender.send(j)
-            # inform the user
-            print '[AA] New shout: "%s" logged.' % msg
-
-        # CONFIG
-        elif args[0] in ['config', 'configura', 'seta']:
-            if len(args) < 3:
-              print '[AA] Missing arguments. Use: aa %s <config> <value>'  % args[0]
-              sys.exit(0)
-            config(sys.argv[2:])
-
-        # STATUS
-        elif args[0] in ['status', 'st']:
-            if daemon.getpid() is not None:
-                print '[AA] daemon is up and running... (pid: %s)' % daemon.getpid()
-            else:
-                print '[AA] Oh nooo! daemon is not running... Get back to work!!!'
-
-        # LOGVIEW
-        elif args[0] in ['logview', 'viewlog']:
-            os.system('less ' + os.getenv('HOME') + '/.aa.log')
-
-        # TIMESLOTS
-        elif args[0] in ['timeslots', 'ts', 'slots', 'time']:
-            s = Slotador()
-            print("Trabalhando há: "+str(s.decorridos_m)+" minutos")
-            print("Faltam: "+str(s.faltam_m)+" minutos")
-            print("")
-            print("Timeslots:")
-            print("respondidos: "+str(s.respondidos))
-            print("perdidos: "+str(s.perdidos))
-            if len(s.perdidos) == 0:
-                print("Muito bem! Agora continue trabalhando!")
-            else:
-                print("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!")
-
-        # PUSH
-        elif args[0] in ['push']:
-            # log a push action
-            logger.log('push')
-            # send all the lines at ~/.aa.log file
-            http_sender.send_log()
-            # notify to the user the push action
-            daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck some pussies.')
-            print '[AA] Session pushed to the server.'
-                
-        # UNKNOWN OPTION
-        else:
-            print'[AA] Unknown option: "%s". Please, try again!' % args[0]
-            sys.exit(2)
-            sys.exit(0)
-    else:
-        print guide
-        sys.exit(2)
+    c = Console()
+    c.process_args()
