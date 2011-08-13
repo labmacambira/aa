@@ -21,7 +21,7 @@
 import sys, os, time, atexit, urllib, urllib2, json, io
 from signal import SIGTERM
 import ConfigParser
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 guide = """
@@ -169,6 +169,11 @@ class Slotador():
         for i in range(1,atual+1):
             if i not in self.respondidos:
                 self.perdidos.append(i)
+
+        self.fim_teorico = self.inicio + timedelta(minutes=120)
+        self.faltam = self.fim_teorico - datetime.now()
+        self.faltam_m = int(self.faltam.total_seconds()/60+1)
+        self.decorridos_m = int(minu)
 
     def atual_respondido(self):
         """Retorna se o timeslot atual ja foi respondido"""
@@ -551,8 +556,11 @@ if __name__ == "__main__":
             os.system('less ' + os.getenv('HOME') + '/.aa.log')
 
         # TIMESLOTS
-        elif args[0] in ['timeslots', 'ts', 'slots']:
+        elif args[0] in ['timeslots', 'ts', 'slots', 'time']:
             s = Slotador()
+            print("Trabalhando há: "+str(s.decorridos_m)+" minutos")
+            print("Faltam: "+str(s.faltam_m)+" minutos")
+            print("")
             print("Timeslots:")
             print("respondidos: "+str(s.respondidos))
             print("perdidos: "+str(s.perdidos))
