@@ -1,0 +1,36 @@
+AAPP
+====
+
+Interface gráfica em PyGTK/Application Indicator para o AA
+
+
+Instalação
+==========
+
+Instale o AA
+
+Instale o arquivo do AAPP com:
+    $ sudo cp aapp.py /usr/local/bin/aapp
+Ou:
+    $ sudo ln -s /complete/path/to/your/aapp.py /usr/local/bin/aapp
+
+Instale as dependências:
+    $ sudo apt-get install pygtk
+
+
+Ícones
+======
+
+Dorminhoco: o AA está parado.
+Gorila: o AA está rodando, mas você não precisa avisar nada.
+Espantado: o AA está rodando e você precisa dar um shout ou post.
+
+
+Janela
+======
+
+Clique na ícone e em AA para abrir a janela.
+Escreva algo e dê ENTER para dar um shout.
+ESC para cancelar.
+
+A barra de progresso mostra quanto falta para terminar o trabalho do dia.

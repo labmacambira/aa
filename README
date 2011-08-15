@@ -35,6 +35,7 @@ Now you can use:
     $ aa stop                         ... stops your session
     $ aa config <attribute> <value>   ... sets some attribute
     $ aa status|st                    ... checks if daemon is running
+    $ aa time|ts                      ... show time and timeslot info
     $ aa viewlog                      ... shows your current log
     $ aa push                         ... pushes your log to the server
 
@@ -49,6 +50,7 @@ Configuration attributes currently in use:
 
     user.nickname
     user.email
+    user.tick
     server.url
 
 Suggested Workflow
