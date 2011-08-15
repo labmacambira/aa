@@ -526,9 +526,12 @@ class Console():
         if len(sys.argv) > 1:
             # START
             if args[0] in ['start', 'inicio', 'inicia', 'início', 'begin']:
-                self.start()
-                # inform to the user at console
-                print '[AA] Your session has started. Happy hacking!'
+                if not self.daemon_running():
+                    self.start()
+                    # inform to the user at console
+                    print '[AA] Your session has started. Happy hacking!'
+                else:
+                    print '[AA] Error: Daemon seems to be already running. Try to stop and start again'
 
             # STOP
             elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
@@ -583,7 +586,7 @@ class Console():
             # TIMESLOTS
             elif args[0] in ['timeslots', 'ts', 'slots', 'time']:
                 s = Slotador()
-                print("Trabalhando há: "+str(s.decorridos_m)+" minutos")
+                print("Trabalhando ha: "+str(s.decorridos_m)+" minutos")
                 print("Faltam: "+str(s.faltam_m)+" minutos")
                 print("")
                 print("Timeslots:")
