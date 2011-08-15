@@ -353,7 +353,8 @@ class AADaemon(Daemon):
         avisos_tick = 0
         inicio = time.time()
         atual = time.time()
-        self.notify('Your session has started. Programming, modafoca! :-)')
+        self.notify('Your session has started, %s. Programming, modafoca! :-)' %
+                   get(['user','nickname']))
         s = Slotador()
         while True:
             tick = int(get(['user','tick']))
@@ -510,6 +511,14 @@ class Console():
         # fork the daemon and exit
         self.daemon.start()
 
+    def push(self):
+        # log a push action
+        self.logger.log('push')
+        # send all the lines at ~/.aa.log file
+        self.http_sender.send_log()
+        # notify to the user the push action
+        self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck.')
+
     def process_args(self):
         # Parsing console arguments
         # FIXME: talvez usar o argparse?
@@ -587,12 +596,7 @@ class Console():
 
             # PUSH
             elif args[0] in ['push']:
-                # log a push action
-                self.logger.log('push')
-                # send all the lines at ~/.aa.log file
-                self.http_sender.send_log()
-                # notify to the user the push action
-                self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck some pussies.')
+                self.push()
                 print '[AA] Session pushed to the server.'
                     
             # UNKNOWN OPTION

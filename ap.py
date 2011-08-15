@@ -19,6 +19,7 @@
 #-----------------------------------------------------------------------------
 
 from datetime import datetime, timedelta
+import os
 
 import gobject
 import pygtk
@@ -31,18 +32,20 @@ import aa
 class Indicador():
 
    def __init__(self):
-       self.janela = Janela()
-
        self.ind = appindicator.Indicator("labmacambira-aa-client",
                                        #"face-monkey", # aka Gorila Truta
                                      "indicator-messages",
                                   appindicator.CATEGORY_APPLICATION_STATUS)
-       self.ind.set_icon("face-monkey")
+       self.ind.set_icon("face-tired")
        self.ind.set_status(appindicator.STATUS_ACTIVE)
        self.ind.set_attention_icon("face-surprise")
        # /usr/share/icons
        # /usr/share/pixmaps
        # /usr/share/app-install
+
+       self.dormindo = True
+       self.console = aa.Console()
+       self.janela = Janela(self)
 
        self.slotador = aa.Slotador()
        self.cont = 0
@@ -58,9 +61,17 @@ class Indicador():
        #mi.add_accelerator("activate", accel_group, ord('Q'),
        #                   gtk.gdk.CONTROL_MASK, gtk.ACCEL_VISIBLE)
 
-       gtk.timeout_add(2000, self.atualizar)
-
        gtk.main()
+
+   def acordar(self):
+       self.ind.set_icon("face-monkey")
+       self.timeout_id = gtk.timeout_add(2000, self.atualizar)
+
+   def dormir(self):
+       self.ind.set_icon("face-tired")
+       gobject.source_remove(self.timeout_id)
+       self.ind.set_label('')
+       self.ind.set_status(appindicator.STATUS_ACTIVE)
 
    def clicado(self, w, r):
        self.janela.mostrar()
@@ -80,8 +91,9 @@ class Indicador():
 
 class Janela(object):       
 
-    def __init__(self):
-        self.console = aa.Console()
+    def __init__(self, ind):
+        self.ind = ind
+        self.console = ind.console
 
         builder = gtk.Builder()
         builder.add_from_file("janela.glade")
@@ -124,10 +136,16 @@ class Janela(object):
         self.startstop_label()
         pressionado = w.get_active()
         if pressionado:
-            self.console.start()
+            #self.console.start()
+            if not self.console.daemon_running():
+                os.system("aa start")
+            self.ind.acordar()
             w.set_label("Stop")
         else:
-            self.console.stop()
+            #self.console.stop()
+            if self.console.daemon_running():
+                os.system("aa stop")
+            self.ind.dormir()
             w.set_label("Start")
 
     def cancelar(self, w):
