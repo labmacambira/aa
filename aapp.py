@@ -109,6 +109,7 @@ class Janela(object):
                                   "on_cancel" : self.cancelar,
                                   "on_ss" : self.startstop,
                                   "on_push" : self.push,
+                                  "on_sair" : self.sair,
                                 })
         self.janela = builder.get_object("janela")
         self.mensagem = builder.get_object("mensagem")
@@ -165,6 +166,9 @@ class Janela(object):
             self.ind.dormir()
             w.set_label("Start")
 
+    def sair(self, w):
+        gtk.main_quit()
+        
     def cancelar(self, w):
         """Botao Cancelar clicado"""
         self.resetar()
