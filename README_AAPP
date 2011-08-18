@@ -34,3 +34,9 @@ Escreva algo e dê ENTER para dar um shout.
 ESC para cancelar.
 
 A barra de progresso mostra quanto falta para terminar o trabalho do dia.
+
+
+Applet
+======
+
+O número que aparece entre parênteses do lado de quantos minutos faltam para o fim do trabalho são quantos minutos faltam para o início do próximo timeslot.

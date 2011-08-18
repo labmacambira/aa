@@ -84,14 +84,21 @@ class Indicador():
     def atualizar(self):
         """atualiza contagem de minutos"""
         self.slotador.atualizar()
-        self.ind.set_label('[faltam '+str(self.slotador.faltam_m)+'min]')
         raz = float(self.slotador.decorridos_m)/(self.slotador.faltam_m+self.slotador.decorridos_m)
+        # ajusta barra de completude da janela
         self.janela.ajustar_barra(raz)
         #menuitem.get_child().set_text('New text')
+        ateslot = ''
         if self.slotador.atual_respondido():
+            # Coloca carinha do gorila
             self.ind.set_status(appindicator.STATUS_ACTIVE)
+            ateslot = '('+str(self.slotador.prox_time)+')'
         else:
+            # Coloca cara de atencao
             self.ind.set_status(appindicator.STATUS_ATTENTION)
+
+        # ajusta novo label
+        self.ind.set_label('[faltam '+str(self.slotador.faltam_m)+'min'+ateslot+']')
         return True
 
 

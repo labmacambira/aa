@@ -173,6 +173,7 @@ class Slotador():
         self.fim_teorico = self.inicio + timedelta(minutes=120)
         self.faltam = self.fim_teorico - datetime.now()
         self.faltam_m = int(self.faltam.total_seconds()/60+1)
+        self.prox_time = (self.faltam_m-5) % 15
         self.decorridos_m = int(minu)
 
     def atual_respondido(self):
