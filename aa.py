@@ -589,6 +589,7 @@ class Console():
                 s = Slotador()
                 print("Trabalhando ha: "+str(s.decorridos_m)+" minutos")
                 print("Faltam: "+str(s.faltam_m)+" minutos")
+                print("Tempo até proximo timeslot: "+str(s.prox_time)+" minutos")
                 print("")
                 print("Timeslots:")
                 print("respondidos: "+str(s.respondidos))
