@@ -23,6 +23,13 @@ from signal import SIGTERM
 import ConfigParser
 from datetime import datetime, timedelta
 
+try:
+    import pynotify
+    if not pynotify.init("AA"):
+        print "there was a problem initializing the pynotify module"
+except:
+    print "you don't seem to have pynotify installed"
+
 
 guide = """
 _.__o_oOoOo[ AA ]oOoOo_o__._
@@ -310,6 +317,7 @@ class Daemon:
                 else:
                     print str(err)
                     sys.exit(1)
+        os.remove(self.pidfile)
 
     def restart(self):
         """
@@ -384,14 +392,18 @@ class AADaemon(Daemon):
         """
         A simple wrapper to Ubuntu's notify-send.
         """
-        os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
+        #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
+        pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
+                              msg, 'face-monkey').show()
         os.system('espeak -v pt "%s"' % msg)
 
     def notify_english(self, msg):
         """
         variant of notify above, for english
         """
-        os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
+        #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
+        pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
+                              msg, 'face-monkey').show()
         os.system('espeak "%s"' % msg)
 
 #

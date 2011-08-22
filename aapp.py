@@ -26,11 +26,14 @@ import pygtk
 pygtk.require("2.0")
 import gtk
 import appindicator
+import dbus
+import dbus.service
+from dbus.mainloop.glib import DBusGMainLoop
 
 import aa
 
 
-class Indicador():
+class Indicador(dbus.service.Object):
     """Cria um Application Indicator no Unity"""
 
     def __init__(self):
@@ -53,17 +56,25 @@ class Indicador():
         self.cont = 0
 
         self.menu = gtk.Menu()
-        mi = gtk.MenuItem('AA')
-        self.menu.append(mi)
+        self.mi = gtk.MenuItem('AA')
+        self.menu.append(self.mi)
         self.ind.set_menu(self.menu)
-        mi.show()
-        mi.connect("activate", self.clicado, "blah")
+        self.mi.show()
+        self.mi.connect("activate", self.clicado, "blah")
         #accel_group = gtk.AccelGroup()
         #self.janela.janela.add_accel_group(accel_group)
         #mi.add_accelerator("activate", accel_group, ord('Q'),
         #                   gtk.gdk.CONTROL_MASK, gtk.ACCEL_VISIBLE)
 
+        DBusGMainLoop(set_as_default=True)
+        bus_name = dbus.service.BusName('org.macambira.AA', bus=dbus.SessionBus())
+        dbus.service.Object.__init__(self, bus_name, '/org/macambira/AA')
+
         gtk.main()
+
+    @dbus.service.method('org.macambira.AA')
+    def atalho(self):
+        self.mi.activate()
 
     def acordar(self):
         """comeca a contar os minutos"""
@@ -117,8 +128,10 @@ class Janela(object):
                                   "on_ss" : self.startstop,
                                   "on_push" : self.push,
                                   "on_sair" : self.sair,
+                                  'on_destroy' : self.resetar,
                                 })
         self.janela = builder.get_object("janela")
+        self.janela.set_focus_on_map(True)
         self.mensagem = builder.get_object("mensagem")
         self.barra = builder.get_object("barra")
         self.bot_ss = builder.get_object("startstop")
@@ -127,6 +140,7 @@ class Janela(object):
         else:
             self.bot_ss.set_active(False)
         self.startstop_label()
+
 
     def ajustar_barra(self, x):
         """ajusta o preenchimento de barra de minutos"""
@@ -138,11 +152,12 @@ class Janela(object):
             x2 = x
         self.barra.set_fraction(x2)
 
-    def resetar(self):
+    def resetar(self, w=None):
         """Reseta a janela para para poder ser aberta novamente"""
         self.janela.hide()
         self.mensagem.set_text("")
         self.mensagem.grab_focus()
+        return True
 
     def push(self, w):
         """faz o push do AA"""
@@ -182,7 +197,9 @@ class Janela(object):
 
     def mostrar(self):
         """Revela a janela"""
-        self.janela.show()
+        self.mensagem.grab_focus()
+        self.janela.present()
+        self.janela.activate_focus()
 
     def enviar(self, w):
         """Envia um shout pelo AA"""
