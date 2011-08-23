@@ -19,7 +19,7 @@
 #-----------------------------------------------------------------------------
 
 from datetime import datetime, timedelta
-import os
+import os, sys
 
 import gobject
 import pygtk
@@ -31,6 +31,10 @@ import dbus.service
 from dbus.mainloop.glib import DBusGMainLoop
 
 import aa
+
+
+def achar_arquivo(nome):
+    return os.readlink('/usr/local/bin/aapp')[:-7]+nome
 
 
 class Indicador(dbus.service.Object):
@@ -61,10 +65,6 @@ class Indicador(dbus.service.Object):
         self.ind.set_menu(self.menu)
         self.mi.show()
         self.mi.connect("activate", self.clicado, "blah")
-        #accel_group = gtk.AccelGroup()
-        #self.janela.janela.add_accel_group(accel_group)
-        #mi.add_accelerator("activate", accel_group, ord('Q'),
-        #                   gtk.gdk.CONTROL_MASK, gtk.ACCEL_VISIBLE)
 
         DBusGMainLoop(set_as_default=True)
         bus_name = dbus.service.BusName('org.macambira.AA', bus=dbus.SessionBus())
@@ -122,7 +122,7 @@ class Janela(object):
         self.console = ind.console
 
         builder = gtk.Builder()
-        builder.add_from_file("janela.glade")
+        builder.add_from_file(achar_arquivo("janela.glade"))
         builder.connect_signals({ "on_ok" : self.enviar,
                                   "on_cancel" : self.cancelar,
                                   "on_ss" : self.startstop,
@@ -131,7 +131,8 @@ class Janela(object):
                                   'on_destroy' : self.resetar,
                                 })
         self.janela = builder.get_object("janela")
-        self.janela.set_focus_on_map(True)
+        #self.janela.set_focus_on_map(True)
+        self.janela.set_position(gtk.WIN_POS_CENTER)
         self.mensagem = builder.get_object("mensagem")
         self.barra = builder.get_object("barra")
         self.bot_ss = builder.get_object("startstop")
@@ -140,7 +141,6 @@ class Janela(object):
         else:
             self.bot_ss.set_active(False)
         self.startstop_label()
-
 
     def ajustar_barra(self, x):
         """ajusta o preenchimento de barra de minutos"""
@@ -156,7 +156,8 @@ class Janela(object):
         """Reseta a janela para para poder ser aberta novamente"""
         self.janela.hide()
         self.mensagem.set_text("")
-        self.mensagem.grab_focus()
+        #self.mensagem.grab_focus()
+        self.janela.set_urgency_hint(False)
         return True
 
     def push(self, w):
@@ -197,9 +198,16 @@ class Janela(object):
 
     def mostrar(self):
         """Revela a janela"""
-        self.mensagem.grab_focus()
+        #self.mensagem.grab_focus()
+        self.janela.set_urgency_hint(True)
+        self.janela.set_accept_focus(True)
         self.janela.present()
-        self.janela.activate_focus()
+        self.janela.set_urgency_hint(True)
+        self.janela.set_accept_focus(True)
+        #FIXME a mardita janela nao ganha foco na segunda vez que abre
+        #self.ind.teste.hide()
+        #self.ind.teste.show()
+        #self.janela.show_all()
 
     def enviar(self, w):
         """Envia um shout pelo AA"""
@@ -211,5 +219,56 @@ class Janela(object):
         self.console.send_scream(msg)
 
 
+class Janelinha(object):
+    """janela com opcoes de controle do programa"""
+
+    def __init__(self):
+        """inicializa itens da janela, mas a mantem escondida"""
+        self.console = aa.Console()
+
+        builder = gtk.Builder()
+        builder.add_from_file(achar_arquivo("janelinha.glade"))
+        builder.connect_signals({ "on_ok" : self.enviar,
+                                  "on_cancel" : self.cancelar,
+                                })
+        self.janela = builder.get_object("janela")
+        #self.janela.set_focus_on_map(True)
+        self.janela.set_position(gtk.WIN_POS_CENTER)
+        self.mensagem = builder.get_object("mensagem")
+
+        self.janela.show_all()
+
+        gtk.main()
+
+    def ajustar_barra(self, x):
+        """ajusta o preenchimento de barra de minutos"""
+        if x < 0.0:
+            x2 = 0.0
+        elif x > 1.0:
+            x2 = 1.0
+        else:
+            x2 = x
+        self.barra.set_fraction(x2)
+
+    def cancelar(self, w):
+        """Botao Cancelar clicado"""
+        gtk.main_quit()
+
+    def enviar(self, w):
+        """Envia um shout pelo AA"""
+        print "oooi"
+        msg = self.mensagem.get_text()
+        self.janela.hide()
+        # Evita que a janela fique esperando ate o fim do shout
+        while gtk.events_pending():
+            gtk.main_iteration() 
+        self.console.send_scream(msg)
+        gtk.main_quit()
+        print "oooi2"
+
 if __name__ == "__main__":
-    i = Indicador()
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "msg":
+            Janelinha()
+    else:
+        i = Indicador()

@@ -19,9 +19,11 @@
 #-----------------------------------------------------------------------------
 
 
-import dbus
+import os
+#import dbus
  
-bus = dbus.SessionBus()
-atalhar = bus.get_object('org.macambira.AA', '/org/macambira/AA')
-ativar = atalhar.get_dbus_method('atalho', 'org.macambira.AA')
-print ativar()
+#bus = dbus.SessionBus()
+#atalhar = bus.get_object('org.macambira.AA', '/org/macambira/AA')
+#ativar = atalhar.get_dbus_method('atalho', 'org.macambira.AA')
+#ativar()
+os.system("aapp msg")

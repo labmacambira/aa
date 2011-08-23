@@ -546,6 +546,17 @@ class Console():
                 else:
                     print '[AA] Error: Daemon seems to be already running. Try to stop and start again'
 
+            # REVIVE
+            elif args[0] in ['revive','ressuscitar', 'resurrect', 'reviver']:
+                if not self.daemon_running():
+                    print '[AA] What have you done? Run to the hills! The daemon has been'+\
+                    ' ressurected and will unleash hell upon us ALL!'
+                    self.daemon.start()
+                    # inform to the user at console
+                else:
+                    print '[AA] These dark magics are not needed now. The daemon '+\
+                    'is already alive and spreading chaos upon the world.'
+
             # STOP
             elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
                 self.stop()

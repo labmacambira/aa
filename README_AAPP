@@ -40,3 +40,12 @@ Applet
 ======
 
 O número que aparece entre parênteses do lado de quantos minutos faltam para o fim do trabalho são quantos minutos faltam para o início do próximo timeslot.
+
+
+Atalhos
+=======
+
+Agora dá para colocar um atalho muito fera! Faça o seu sistema criar um atalho para "aapp msg".
+Exemplo no Ubuntu: Clique no símbolo de desligar > Config. Sist. > Atalhos de teclado > Adicionar
+Ajuste para ele rodar "aapp msg" com Ctrl+Alt+M (por exemplo). E agora quando você apertar isso, ele
+abrirá uma janelinha para dar um shout!
