@@ -19,6 +19,7 @@
 #-----------------------------------------------------------------------------
 
 from datetime import datetime, timedelta
+from subprocess import Popen, PIPE, STDOUT
 import os, sys
 
 import gobject
@@ -35,6 +36,15 @@ import aa
 
 def achar_arquivo(nome):
     return os.readlink('/usr/local/bin/aapp')[:-7]+nome
+
+    #try:
+    #    cmd = 'readlink -f aapp'
+    #    p = Popen(cmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    #    output = p.stdout.read()
+    #    caminho = output.splitlines()[0].rsplit('/', 1)[0]+'/'
+    #    return caminho+nome
+    #except:
+    #    return "./"+nome
 
 
 class Indicador(dbus.service.Object):
