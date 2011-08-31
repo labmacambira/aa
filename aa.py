@@ -44,6 +44,9 @@ Usage:
    aa push                    ... pushes the log to the server
    aa status                  ... checks daemon status
    aa logview                 ... shows your current log
+   aa time                    ... shows time and timeslot info
+   aa revive                  ... revives the session after a crash
+
 
 Remember, you have to configure your nickname before start:
 
