@@ -500,6 +500,9 @@ class Console():
         self.http_sender.send(j)
 
     def stop(self):
+        if not self.daemon_running():
+          print '[AA] Daemon not running, so no point in trying to stop it.'
+          sys.exit(0)
         # log a stop session action
         self.logger.log('stop')
         # the daemon notifies that the session is finished
