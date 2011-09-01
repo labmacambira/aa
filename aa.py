@@ -365,7 +365,7 @@ class AADaemon(Daemon):
         avisos_tick = 0
         inicio = time.time()
         atual = time.time()
-        self.notify('Your session has started, %s. Programming, modafoca! :-)' %
+        self.notify_english('Your session has started, %s. Programming, modafoca! :-)' %
                    get(['user','nickname']))
         s = Slotador()
         while True:
@@ -386,7 +386,7 @@ class AADaemon(Daemon):
                 #segundos = int((atual-inicio)%60)
                 s.atualizar()
                 if not s.atual_respondido():
-                    self.notify('Tick-tack... '+str(minutos)+\
+                    self.notify('Tic-tac... '+str(minutos)+\
                                 ' minutos' )
                     self.logger.log('notify') # precisamos notificar isso no log?
                     # FIXME: notificar a cada X minutos e informar quanto tempo falta
@@ -503,7 +503,7 @@ class Console():
         # log a stop session action
         self.logger.log('stop')
         # the daemon notifies that the session is finished
-        self.daemon.notify('Your session has finished. Dont forget to record your screencast.')
+        self.daemon.notify_english('Your session has finished. Dont forget to record your screencast.')
         # kill the daemon
         self.daemon.stop()
 
