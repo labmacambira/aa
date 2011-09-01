@@ -365,7 +365,7 @@ class AADaemon(Daemon):
         avisos_tick = 0
         inicio = time.time()
         atual = time.time()
-        self.notify_english('Your session has started, %s. Programming, modafoca! :-)' %
+        self.notify('Your session has started, %s. Programming, modafoca! :-)' %
                    get(['user','nickname']))
         s = Slotador()
         while True:
