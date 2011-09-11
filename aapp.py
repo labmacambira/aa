@@ -138,7 +138,7 @@ class Janela(object):
                                   "on_ss" : self.startstop,
                                   "on_push" : self.push,
                                   "on_sair" : self.sair,
-                                  'on_destroy' : self.resetar,
+                                  'on_delete_event' : self.resetar,
                                 })
         self.janela = builder.get_object("janela")
         #self.janela.set_focus_on_map(True)
@@ -162,7 +162,7 @@ class Janela(object):
             x2 = x
         self.barra.set_fraction(x2)
 
-    def resetar(self, w=None):
+    def resetar(self, w=None, w2=None):
         """Reseta a janela para para poder ser aberta novamente"""
         self.janela.hide()
         self.mensagem.set_text("")
