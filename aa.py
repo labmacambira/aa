@@ -44,6 +44,9 @@ Usage:
    aa push                    ... pushes the log to the server
    aa status                  ... checks daemon status
    aa logview                 ... shows your current log
+   aa time                    ... shows time and timeslot info
+   aa revive                  ... revives the session after a crash
+
 
 Remember, you have to configure your nickname before start:
 
@@ -383,7 +386,7 @@ class AADaemon(Daemon):
                 #segundos = int((atual-inicio)%60)
                 s.atualizar()
                 if not s.atual_respondido():
-                    self.notify('Tick-tack... '+str(minutos)+\
+                    self.notify('Tic-tac... '+str(minutos)+\
                                 ' minutos' )
                     self.logger.log('notify') # precisamos notificar isso no log?
                     # FIXME: notificar a cada X minutos e informar quanto tempo falta
@@ -497,10 +500,13 @@ class Console():
         self.http_sender.send(j)
 
     def stop(self):
+        if not self.daemon_running():
+          print '[AA] Daemon not running, so no point in trying to stop it.'
+          sys.exit(0)
         # log a stop session action
         self.logger.log('stop')
         # the daemon notifies that the session is finished
-        self.daemon.notify('Your session has finished. Dont forget to record your screencast.')
+        self.daemon.notify_english('Your session has finished. Dont forget to record your screencast.')
         # kill the daemon
         self.daemon.stop()
 
