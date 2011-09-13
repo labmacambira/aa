@@ -266,7 +266,6 @@ class Janelinha(object):
 
     def enviar(self, w):
         """Envia um shout pelo AA"""
-        print "oooi"
         msg = self.mensagem.get_text()
         self.janela.hide()
         # Evita que a janela fique esperando ate o fim do shout
@@ -274,7 +273,6 @@ class Janelinha(object):
             gtk.main_iteration() 
         self.console.send_scream(msg)
         gtk.main_quit()
-        print "oooi2"
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
