@@ -439,6 +439,12 @@ class AAHTTPSender:
         f.close()
 
         d = [{'user': get(['user','nickname']), 'date': a.split(',')[:2][0], 'log': a.split(',')[:2][1]} for a in alerts]
+        for linha in d:
+            ret =  linha['log'].split(' ', 1)
+            if len(ret) == 2:
+                for tipo in ['scream', 'say', 'oalert', 'shout']:
+                    ret[0] = ret[0].replace(tipo, 'alert')
+                linha['log'] = ret[0] + ' ' + ret[1]
         j = json.dumps(d)
         self.send(j)
 
@@ -585,6 +591,8 @@ class Console():
                 print '[AA] New alert: "%s" logged.' % msg
 
             # SCREAM
+            # Esses nomes estao sendo usados no PUSH! Se alterar aqui, altere
+            # lá!
             elif args[0] in ['scream', 'say', 'oalert', 'shout']:
                 if len(args) < 2:
                   print '[AA] Please specify a message to say. Use: aa %s <message>'  % args[0]
