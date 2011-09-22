@@ -558,7 +558,7 @@ class Console():
         c = 0
         print '\n'
         for line in tab:
-            if nick in line['owner']:
+            if (nick in line['owner']) or ('everyone' in line['owner']):
                 print "   #%-10s %-20s %s" % (line['ticket'], line['component'], line['summary'])
                 c += 1
         if c is not 0:
