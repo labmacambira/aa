@@ -18,9 +18,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #-----------------------------------------------------------------------------
 
-import sys, os, time, atexit, urllib, urllib2, json, io
+import sys, os, time, atexit, urllib, urllib2, json, io, ConfigParser, csv
 from signal import SIGTERM
-import ConfigParser
 from datetime import datetime, timedelta
 
 try:
@@ -36,16 +35,18 @@ _.__o_oOoOo[ AA ]oOoOo_o__._
 
 Usage:
 
-   aa config <config> <value> ... sets the config value
-   aa start                   ... starts the work session of the day
-   aa stop                    ... stops the work session
-   aa shout <message>         ... alerts what he is doing now (online)
-   aa post <message>          ... alerts what he is doing now (offline)
-   aa push                    ... pushes the log to the server
-   aa status                  ... checks daemon status
-   aa logview                 ... shows your current log
-   aa time                    ... shows time and timeslot info
-   aa revive                  ... revives the session after a crash
+   aa config <config> <value>     ... sets the config value
+   aa start                       ... starts the work session of the day
+   aa stop                        ... stops the work session
+   aa shout <message>             ... alerts what he is doing now (online)
+   aa post <message>              ... alerts what he is doing now (offline)
+   aa push                        ... pushes the log to the server
+   aa status                      ... checks daemon status
+   aa logview                     ... shows your current log
+   aa time                        ... shows time and timeslot info
+   aa revive                      ... revives the session after a crash
+   aa tickets                     ... shows your active tickets (if you are a Macambira)
+   aa showticket <ticket number>  ... shows a ticket on trac
 
 
 Remember, you have to configure your nickname before start:
@@ -545,6 +546,26 @@ class Console():
         # notify to the user the push action
         self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck.')
 
+    # FIXME: I'm tired now, but this would be more interesting in a proper class
+    def get_trac_tickets(self, sf_user=None):
+        if sf_user is not None:
+            nick = sf_user
+        else:
+            nick = get(['user','nickname'])
+        req = urllib2.Request('http://sourceforge.net/apps/trac/labmacambira/report/1?format=tab')
+        res = urllib2.urlopen(req)
+        tab = csv.DictReader(res, delimiter='\t')
+        c = 0
+        print '\n'
+        for line in tab:
+            if nick in line['owner']:
+                print "   #%-10s %-20s %s" % (line['ticket'], line['component'], line['summary'])
+                c += 1
+        if c is not 0:
+            print '\n[AA] You have %s active tickets. Lets hack modafoca!' % c
+        else:
+            print '\n[AA] You dont have active tickets actually.'
+
     def process_args(self):
         # Parsing console arguments
         # FIXME: talvez usar o argparse?
@@ -641,7 +662,22 @@ class Console():
             elif args[0] in ['push']:
                 self.push()
                 print '[AA] Session pushed to the server.'
-                    
+
+            # TICKETS
+            elif args[0] in ['tickets']:
+                if len(args) >= 2:
+                    self.get_trac_tickets(args[1])
+                else:
+                    self.get_trac_tickets()
+
+            # VIEWTICKET
+            elif args[0] in ['viewticket', 'showticket']:
+                if len(args) < 2:
+                    print '[AA] Missing arguments. Use: aa %s <ticket number>'  % args[0]
+                    sys.exit(0)
+                print '[AA] Openning ticket #%s in your browser...' % args[1]
+                os.system('firefox http://sourceforge.net/apps/trac/labmacambira/ticket/%s' % args[1])
+            
             # UNKNOWN OPTION
             else:
                 print'[AA] Unknown option: "%s". Please, try again!' % args[0]
