@@ -69,7 +69,7 @@ email=
 tick=900
 
 [server]
-url=http://nightsc.com.br/aa/novo_log.php
+url=http://nightsc.com.br/aa/parser.php
 """
 
 def init_config():

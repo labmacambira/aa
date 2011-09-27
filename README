@@ -18,7 +18,7 @@ Configure your nickname:
 
 And the AA-Web (the web server) URL:
 
-    $ aa config server.url http://nightsc.com.br/aa/novo_log.php
+    $ aa config server.url http://nightsc.com.br/aa/parser.php
 
 Install dependencies:
 
