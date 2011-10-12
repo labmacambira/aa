@@ -43,6 +43,11 @@ For now, just 'aa stop' will send your 'work log' to the server. You
 can see your log at http://nightsc.com.br/aa (or any server configured using
 aa config server.url <URL SERVER HERE>).
 
+We suggest to shortcut aa shout to a simpler name such as 'as', since it is used
+very often:
+
+  echo 'alias as="aa shout"'  >> ~/.bashrc
+
 Configuring
 ===========
 
@@ -59,6 +64,8 @@ Suggested Workflow
 A suggestion for your daily workflow on Lab Macambira:
 
 * Look at the tickets of your GT on https://sourceforge.net/apps/trac/labmacambira
+    aa tickets
+    aa showticket <ticket number>
 * Use AA
     aa start
     aa shout working on foo
