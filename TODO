@@ -1,0 +1,5 @@
+ToDo
+* permitir regulagem de tempo atraves do aa config
+* integracao com IRC
+* nao poluir o ~/.bash_history com as mensagens de AA, mas mandar para um ~./aa_history
+* aa shout esta quase sempre registrando duas (ao inves de uma) mensagens no servidor
