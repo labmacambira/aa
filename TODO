@@ -3,3 +3,5 @@ ToDo
 * integracao com IRC
 * nao poluir o ~/.bash_history com as mensagens de AA, mas mandar para um ~./aa_history
 * aa shout esta quase sempre registrando duas (ao inves de uma) mensagens no servidor
+* inserir modos de utilizacao do AA: com janelas reguladas, sem janelas e perdas de slots, etc.
+* Acessar algum tipo de GET que acesse a sessão específica, o shout específico.
