@@ -5,3 +5,4 @@ ToDo
 * aa shout esta quase sempre registrando duas (ao inves de uma) mensagens no servidor
 * inserir modos de utilizacao do AA: com janelas reguladas, sem janelas e perdas de slots, etc.
 * Acessar algum tipo de GET que acesse a sessão específica, o shout específico.
+* Aumentar o tamanho da postagem padrao. Nao cabe este comentario "pensando em conceitualizar todas as postagens como deliberativas, o resto eh comentario que pode ser vinculado a outros comentarios ou postagens ou aa pauta em si"
