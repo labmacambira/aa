@@ -1,0 +1,151 @@
+What is AA? What is the point of AA?
+====================================
+
+Check out this actual IRC conversation for a direct explanation of what AA
+currently is (as of early 2012), in the vision of v1z. However, keep in mind
+that AA is much deeper than that, and is the great vision of the mighty o0o0o.
+
+
+16:20 < hybrid> for AA is the core of LabMacambira.sf.net
+16:21 -!- hybrid is now known as o0o0o
+16:21 < v1z_> pizte: take hybrid very seriously when he says that ;)
+16:22 < pizte> I'm looking it
+16:22 < v1z_> he's right and proven himself all the more so through time !!
+16:23 < pizte> I'm sorry I still don't get the point of AA. So, while I'm coding I keep texting on AA during 2h a day?
+16:24 < pizte> don't take it wrong, I think it's a great idea, but I don't see the objective :)
+16:24 < pizte> s/don't/can't
+16:24 < o0o0o> pizte its totally cool not to get the point. LabMacambira members take a long time to get it also
+16:25 < o0o0o> yeah, there are some different approaches for using AA
+16:25 < pizte> o0o0o: you're here! sorry the other day I didn't answer you! :/
+16:25 < o0o0o> (most of the time here, we care for 'despersonification')
+16:26 < pizte> o0o0o: sorry, got confused hehe
+********************
+16:26 < v1z_> pizte: let me try to explain AA in my computer nerd terms
+16:26 < v1z_> so its basically a social way to coordinate development among distributed teams
+16:27 < v1z_> nowadays we work on teams (like labmacambira) which are not in the same physical space
+16:27 < v1z_> and there are no bosses.
+16:27 < v1z_> its decentralized
+16:27 < v1z_> and distributed.
+16:27 < v1z_> AA is a methodology for dealing with that
+16:27 < v1z_> the core idea is really simple
+16:27 < v1z_> for selected 2h/day, you use microblogging to publish what you're doing
+16:28 < v1z_> every 15min
+16:28 < v1z_> then at the end you record a videolog.
+16:28 < v1z_> that habit, taken seriously, will contribute to a social mechanism
+16:28 < v1z_> that will increase productivity
+16:28 < v1z_> of the team
+16:28 < v1z_> the microbloggin is not for "the boss" -> there aint one
+16:28 < v1z_> the microblogging is for the team
+16:29 < v1z_> or at least for work groups within the team...
+16:29 < humannoise> nerd ways are, computationally nerd ways are soo algorithimic :D
+16:29 < humannoise> i mean organized
+16:29 < v1z_> so, its just a way of leveraging the power of social mechanisms
+16:29 < v1z_> and social networks
+16:30 < v1z_> to coordinate work.
+16:30 < v1z_> the microblog feeds and videlog feeds are all public
+16:30 < v1z_> perhaps using pseudonyms/nicks for des-personification
+16:30 < v1z_> like o0o0o loves 
+16:30 < v1z_> that way people feel more at ease to publish their activity to peers
+16:31 < pizte> ok, I get it, but does it really increase productivity? Because in that case it works based on suggestive content like: "He did that, I ave to do something"
+16:31 < v1z_> this worked in practice over the 2nd. semester of 2011
+16:31 < pizte> *have
+16:31 < v1z_> we coordinated a team of 15 with this, last semester.
+16:31 < v1z_> pizte: well if there was a boss, kind of.
+16:31 < v1z_> if the team just wants to get something done..
+16:32 < v1z_> and if you use AA with a good ethical/social attitude
+16:32 < v1z_> it has shown to work very well.
+16:32 < v1z_> people do periodical reviews -> its all in the logs
+16:32 < v1z_> when a client asks for a report
+16:32 < v1z_> you point them to the logs
+16:32 < v1z_> it saves bureaucracy...
+16:32 < v1z_> and it has more colors to it... I just described the raw stuff
+16:33 < pizte> now I really get it... it's pretty well thought
+16:33 < o0o0o> pizte the point in AA is sharing your hacking experience so people can do things together. AA works as we used and use it. Besides that, that opens legal doors for sustaining us as it documents our dedications also
+16:33 < v1z_> like, last semester, my workgroup had 3 other programmers
+16:33 < v1z_> when I met them physically, great.
+16:34 < v1z_> then when I traveled, the logs and videologs *really* made the whole difference
+16:34 < v1z_> in the teamwork
+16:34 < v1z_> in keeping up with them
+16:34 < v1z_> in minimizing superfluous meetings.
+16:34 < o0o0o> those legal doors are side effects we are enjoying allot
+16:34 < v1z_> and periodically, at my leisure, I could also check what the rest of the big 15-person team was doing
+16:35 < v1z_> socially tight-knit stuff
+16:35 < v1z_> the 2h thing -> its totally arbitrary.
+16:35 < v1z_> it has worked well for part-time team members
+16:36 < v1z_> to work like a day, but take these 2h aside for the microblogged + videlogged activity
+16:36 < v1z_> the rest of the time is free
+16:36 < v1z_> they can microblog freestyle
+16:36 < v1z_> or not...
+16:36 < v1z_> also, mentors microblog freestyle always. they don't have to do the 2h thing
+16:36 < o0o0o> 15/min is also arbitrary
+16:36 < pizte> great
+16:37 < v1z_> but they're motivated and tend to naturally microblog and create longer screencasts
+16:37 < v1z_> thats basically my way of seeing it... but o0o0o's view goes deep ;-)
+16:38 < o0o0o> v1z_, thanks
+16:38 < genjix> v1z_: interesting. what about just skype calls?
+16:38 < v1z_> finally, about the sustainement aspect
+16:38 < v1z_> (just a sec)
+16:38 < genjix> generally i'm against enforced meetings and tasks
+16:38 < v1z_> the whole self-documentation of the methodology
+16:38 < pizte> o0o0o: can you give a link to take a look to AA? or do I have to install an instance on a server?
+16:38 < v1z_> in addition to eliminating most need for reports 
+16:39 < v1z_> and most need for meetings
+16:39 < o0o0o> pizte just install and run the client side of it
+16:39 < v1z_> they also *validate* the programming activity
+16:39 < genjix> reports?
+16:39 < o0o0o> if u need help/links etc, we are here
+16:39 < v1z_> meaning, people tend to fund more
+16:39 < genjix> what's wrong with just a skype call when there's a problem?
+16:39 < pizte> o0o0o: yeah, can you give me some link related to the AA client installation?
+16:39 < v1z_> because they know more or less whats being done
+16:39 < v1z_> (without getting too strict)
+16:39 < v1z_> but at least they know
+16:40 < genjix> i was thinking of having daily 15 min standup meetings among our group
+16:40 < o0o0o> pizte http://wiki.nosdigitais.teia.org.br/GSoC#AA_.28client.29
+16:40 < lalenia> <http://ln-s.net/9wV1> (at wiki.nosdigitais.teia.org.br)
+16:40 < v1z_> genjix: that's not documented
+16:40 < v1z_> its not effective
+16:40 < v1z_> its not asyncrhonous
+16:41 < genjix> but they were unpopular and i eventually saw it was a waste of time
+16:41 < v1z_> syncrhonous meetings suck
+16:41 < v1z_> you want people doing their stuff their own time most of the time
+16:41 < v1z_> as much as possible
+16:41 < v1z_> if you want to catch up, you don't need their attention
+16:41 < v1z_> just read their log and get going
+16:41 < genjix> oh that's an interesting idea
+16:41 < genjix> i never thought of looking at things from that angle
+16:42 < genjix> very interesting
+16:42 < o0o0o> genjix, AA is not for 'when there is a problem' it is for 'doing things together'
+16:42 < o0o0o> _o_o_ oOo _o_o_
+16:42 < genjix> because sometimes i go online and ask my friend "hey what's up. what you been working on"
+16:42 < v1z_> genjix: its ever more important for very  distributed teams
+16:42 < o0o0o> very happy u both got it, this is quite difficult to share
+16:42 < o0o0o> v1z_,  congrats
+16:42 < v1z_> imagine meeting with irish+indian+brazilian devs through skype
+16:42 < genjix> what is AA?
+16:42 < v1z_> on a regular basis...
+16:43 < genjix> AA = ?
+16:43 < v1z_> AA = algorithm autoregulation
+16:43 < v1z_> (of teams)
+16:43 < v1z_> algorithmic
+16:43 < v1z_> sorry
+16:43 < v1z_> it is a broad methodology for coordinating
+16:43 < v1z_> distributed and decentralized teamwork
+16:43 < genjix> aha ok
+16:44 < v1z_> in its current form, it is: *read above*
+16:44 < v1z_> ;-)
+16:44 < v1z_> o0o0o: calls AA the Ambiguous Acronym
+16:44 < v1z_> and then you get off to the crazy tangent that AA dominates the world..
+16:44 < v1z_> and thats why our very logo is (AA)
+16:44 < v1z_> (the end)
+16:45 < v1z_> o0o0o is doing his msc thesis on this (to a good extent)
+16:45 < v1z_> and we should publish a paper on it
+16:45 < v1z_> of course detailing all ramifications and colors that I havent described.
+16:46 < genjix> https://intersango.com/orderbook.php?currency_pair_id=3&debug=true
+16:46 < o0o0o> v1z_, actually my msc is on using code for music
+16:46 < lalenia> <http://ln-s.net/9xSb> (at intersango.com)
+16:46 < v1z_> o0o0o: ok
+16:46 < v1z_> ;)
+16:47 < v1z_> but I'll write the paper anyways
+16:47 < v1z_> so we materialize a more complete thing
+16:47 < v1z_> (we'll)
