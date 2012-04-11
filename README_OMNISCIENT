@@ -1,0 +1,11 @@
+== CURRENT IMPLEMENTATION 10/04/2012 ==
+
+To run an instance, just:
+
+$ cd omniscientAA
+$ python minimumOmniscientAA.py
+
+and open a Pidgin, Finch or make a nullclient.
+
+Any IM network in wich the pidgin/finch/nullclient
+is connected will receive messages as shouts.
