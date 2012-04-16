@@ -7,6 +7,7 @@ ToDo
 * Acessar algum tipo de GET que acesse a sessão específica, o shout específico.
     * Talves pensar num aplicativo REST
 * desligar automaticamente depois de 1 slot perdido (ou mais).
+* integracao com logs do git
 
 
 DONE:
