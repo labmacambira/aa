@@ -663,7 +663,7 @@ class Console():
             # PUSH
             elif args[0] in ['push']:
                 self.push()
-                print '[AA] Session pushed to the server.'
+                print('[AA] Session pushed to the server.')
 
             # TICKETS
             elif args[0] in ['tickets']:
