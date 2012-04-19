@@ -686,7 +686,7 @@ class Console():
                 sys.exit(2)
                 sys.exit(0)
         else:
-            print guide
+            print(guide)
             sys.exit(2)
 
 #
