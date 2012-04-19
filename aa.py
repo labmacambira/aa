@@ -675,14 +675,14 @@ class Console():
             # VIEWTICKET
             elif args[0] in ['viewticket', 'showticket']:
                 if len(args) < 2:
-                    print '[AA] Missing arguments. Use: aa %s <ticket number>'  % args[0]
+                    print('[AA] Missing arguments. Use: aa %s <ticket number>'  % args[0])
                     sys.exit(0)
-                print '[AA] Openning ticket #%s in your browser...' % args[1]
+                print('[AA] Openning ticket #%s in your browser...' % args[1])
                 os.system('firefox http://sourceforge.net/apps/trac/labmacambira/ticket/%s' % args[1])
             
             # UNKNOWN OPTION
             else:
-                print'[AA] Unknown option: "%s". Please, try again!' % args[0]
+                print('[AA] Unknown option: "%s". Please, try again!' % args[0])
                 sys.exit(2)
                 sys.exit(0)
         else:
