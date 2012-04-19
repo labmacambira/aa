@@ -367,7 +367,8 @@ class AADaemon(Daemon):
         avisos_tick = 0
         inicio = time.time()
         atual = time.time()
-        self.notify('Your session has started, %s. Programming, modafoca! :-)' %
+#        self.notify('Your session has started, %s. Programming, modafoca! :-)' %
+        self.notify('Your session has started, %s.' %
                    get(['user','nickname']))
         s = Slotador()
         while True:
@@ -544,7 +545,8 @@ class Console():
         # send all the lines at ~/.aa.log file
         self.http_sender.send_log()
         # notify to the user the push action
-        self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck.')
+#        self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck.')
+        self.daemon.notify_english('Session pushed to the server.')
 
     # FIXME: I'm tired now, but this would be more interesting in a proper class
     def get_trac_tickets(self, sf_user=None):
