@@ -25,9 +25,9 @@ from datetime import datetime, timedelta
 try:
     import pynotify
     if not pynotify.init("AA"):
-        print "there was a problem initializing the pynotify module"
+        print("there was a problem initializing the pynotify module")
 except:
-    print "you don't seem to have pynotify installed"
+    print("you don't seem to have pynotify installed")
 
 
 guide = """
@@ -319,7 +319,7 @@ class Daemon:
                 if os.path.exists(self.pidfile):
                     os.remove(self.pidfile)
                 else:
-                    print str(err)
+                    print(str(err))
                     sys.exit(1)
         if os.path.exists(self.pidfile):
             os.remove(self.pidfile)
@@ -510,7 +510,7 @@ class Console():
 
     def stop(self):
         if not self.daemon_running():
-          print '[AA] Daemon not running, so no point in trying to stop it.'
+          print('[AA] Daemon not running, so no point in trying to stop it.')
           sys.exit(0)
         # log a stop session action
         self.logger.log('stop')
@@ -529,7 +529,7 @@ class Console():
         init_config()
         # checks if the user nickname is defined
         if get(['user','nickname']) is '':
-            print '[AA] Please, set your nickname before start hacking. Use: aa config user.nickname <YOUR NICKNAME>.'
+            print('[AA] Please, set your nickname before start hacking. Use: aa config user.nickname <YOUR NICKNAME>.')
             sys.exit(0)
 
         # start the logger (overwrite or create the ~/.aa.log file)
@@ -558,15 +558,15 @@ class Console():
         res = urllib2.urlopen(req)
         tab = csv.DictReader(res, delimiter='\t')
         c = 0
-        print '\n'
+        print('\n')
         for line in tab:
             if (nick in line['owner']) or ('everyone' in line['owner']):
-                print "   #%-10s %-20s %s" % (line['ticket'], line['component'], line['summary'])
+                print("   #%-10s %-20s %s" % (line['ticket'], line['component'], line['summary']))
                 c += 1
         if c is not 0:
-            print '\n[AA] You have %s active tickets. Lets hack modafoca!' % c
+            print('\n[AA] You have %s active tickets. Lets hack modafoca!' % c)
         else:
-            print '\n[AA] You dont have active tickets actually.'
+            print('\n[AA] You dont have active tickets actually.')
 
     def process_args(self):
         # Parsing console arguments
@@ -578,31 +578,31 @@ class Console():
                 if not self.daemon_running():
                     self.start()
                     # inform to the user at console
-                    print '[AA] Your session has started. Happy hacking!'
+                    print('[AA] Your session has started. Happy hacking!')
                 else:
-                    print '[AA] Error: Daemon seems to be already running. Try to stop and start again'
+                    print('[AA] Error: Daemon seems to be already running. Try to stop and start again')
 
             # REVIVE
             elif args[0] in ['revive','ressuscitar', 'resurrect', 'reviver']:
                 if not self.daemon_running():
-                    print '[AA] What have you done? Run to the hills! The daemon has been'+\
-                    ' ressurected and will unleash hell upon us ALL!'
+                    print('[AA] What have you done? Run to the hills! The daemon has been'+\
+                    ' ressurected and will unleash hell upon us ALL!')
                     self.daemon.start()
                     # inform to the user at console
                 else:
-                    print '[AA] These dark magics are not needed now. The daemon '+\
-                    'is already alive and spreading chaos upon the world.'
+                    print('[AA] These dark magics are not needed now. The daemon '+\
+                    'is already alive and spreading chaos upon the world.')
 
             # STOP
             elif args[0] in ['stop','fim', 'finaliza', 'termina', 'end']:
                 self.stop()
                 # inform to the user at console
-                print '[AA] Your session has finished. Dont forget to record your screencast.'
+                print('[AA] Your session has finished. Dont forget to record your screencast.')
 
             # ALERT
             elif args[0] in ['alert', 'informa', 'marca', 'anota', 'msg', 'post']:
                 if len(args) < 2:
-                  print '[AA] Please specify a message to post. Use: aa %s <message>'  % args[0]
+                  print('[AA] Please specify a message to post. Use: aa %s <message>'  % args[0])
                   sys.exit(0)
 
                 # no matter if we use quotes or not after the "aa alert"
@@ -611,35 +611,35 @@ class Console():
                 # log a alert action
                 self.logger.log('alert ' + msg)
                 # inform the user
-                print '[AA] New alert: "%s" logged.' % msg
+                print('[AA] New alert: "%s" logged.' % msg)
 
             # SCREAM
             # Esses nomes estao sendo usados no PUSH! Se alterar aqui, altere
             # lá!
             elif args[0] in ['scream', 'say', 'oalert', 'shout']:
                 if len(args) < 2:
-                  print '[AA] Please specify a message to say. Use: aa %s <message>'  % args[0]
+                  print('[AA] Please specify a message to say. Use: aa %s <message>'  % args[0])
                   sys.exit(0)
                   
                 msg = ''.join([pal+" " for pal in sys.argv[2:]])
                 msg = msg.strip()
                 self.send_scream(msg)
                 # inform the user
-                print '[AA] New shout: "%s" logged.' % msg
+                print('[AA] New shout: "%s" logged.' % msg)
 
             # CONFIG
             elif args[0] in ['config', 'configura', 'seta']:
                 if len(args) < 3:
-                  print '[AA] Missing arguments. Use: aa %s <config> <value>'  % args[0]
+                  print('[AA] Missing arguments. Use: aa %s <config> <value>'  % args[0])
                   sys.exit(0)
                 config(sys.argv[2:])
 
             # STATUS
             elif args[0] in ['status', 'st']:
                 if self.daemon_running():
-                    print '[AA] daemon is up and running... (pid: %s)' % self.daemon.getpid()
+                    print('[AA] daemon is up and running... (pid: %s)' % self.daemon.getpid())
                 else:
-                    print '[AA] Oh nooo! daemon is not running... Get back to work!!!'
+                    print('[AA] Oh nooo! daemon is not running... Get back to work!!!')
 
             # LOGVIEW
             elif args[0] in ['logview', 'viewlog']:
