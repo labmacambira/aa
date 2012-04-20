@@ -8,6 +8,8 @@ ToDo
     * Talves pensar num aplicativo REST
 * desligar automaticamente depois de 1 slot perdido (ou mais).
 * integracao com logs do git
+* grupos de usuarios (ex. mocambos)
+* fazer uma explicacao boa do shout, start, stop push e outros comandos e interdependencias
 
 
 DONE:
