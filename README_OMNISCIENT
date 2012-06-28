@@ -7,5 +7,8 @@ $ python minimumOmniscientAA.py
 
 and open a Pidgin, Finch or make a nullclient.
 
-Any IM network in wich the pidgin/finch/nullclient
+Any IM network in which the pidgin/finch/nullclient
 is connected will receive messages as shouts.
+
+This code and generalSender.py should be integrated to
+the code ASAP.
