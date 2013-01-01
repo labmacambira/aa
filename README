@@ -20,7 +20,7 @@ Configure your nickname:
 
 And the AA-Web (the web server) URL:
 
-    $ aa config server.url http://nightsc.com.br/aa/parser.php
+    $ aa config server.url http://www.pulapirata.com/skills/aa/parser.php
 
 Install dependencies:
 
