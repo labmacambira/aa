@@ -42,7 +42,7 @@ Now you can use:
     $ aa push                         ... pushes your log to the server
 
 For now, just 'aa stop' will send your 'work log' to the server. You
-can see your log at http://nightsc.com.br/aa (or any server configured using
+can see your log at http://www.pulapirata.com/skills/aa (or any server configured using
 aa config server.url <URL SERVER HERE>).
 
 We suggest to shortcut aa shout to a simpler name such as 'as', since it is used
