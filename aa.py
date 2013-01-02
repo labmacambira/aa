@@ -494,7 +494,7 @@ class Console():
 
         # Here the daemon that notifies the user every N seconds
         # /tmp/aad.pid has the PID of the forked daemon
-        self.daemon = AADaemon('/tmp/aad.pid')
+        self.daemon = AADaemon('/tmp/aad.pid','/dev/null','/tmp/aa.stdout','/tmp/aa.stderr')
 
     def send_scream(self, msg):
         # log a scream action
