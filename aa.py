@@ -389,8 +389,7 @@ class AADaemon(Daemon):
                 #segundos = int((atual-inicio)%60)
                 s.atualizar()
                 if not s.atual_respondido():
-                    self.notify('Tic-tac... '+str(minutos)+\
-                                ' minutos' )
+                    self.notify('Tic-tac... ' + str(minutos) + ' minutos' )
                     self.logger.log('notify') # precisamos notificar isso no log?
                     # FIXME: notificar a cada X minutos e informar quanto tempo falta
                     # FIXME: como verificar que o usuario logou? fica a cargo do servidor?
