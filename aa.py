@@ -368,8 +368,7 @@ class AADaemon(Daemon):
         inicio = time.time()
         atual = time.time()
 #        self.notify('Your session has started, %s. Programming, modafoca! :-)' %
-        self.notify('Your session has started, %s.' %
-                   get(['user','nickname']))
+        self.notify('Your session has started, %s.' % get(['user','nickname']))
         s = Slotador()
         while True:
             tick = int(get(['user','tick']))
@@ -393,28 +392,21 @@ class AADaemon(Daemon):
                     self.logger.log('notify') # precisamos notificar isso no log?
                     # FIXME: notificar a cada X minutos e informar quanto tempo falta
                     # FIXME: como verificar que o usuario logou? fica a cargo do servidor?
-    def notify(self, msg):
+    def notify(self, msg, lang='pt'):
         """
         A simple wrapper to Ubuntu's notify-send.
         """
         #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
         pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
                               msg, 'face-monkey').show()
-        os.system('espeak -v pt "%s"&' % msg)
-
-    def notify_english(self, msg):
-        """
-        variant of notify above, for english
-        """
-        #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
-        pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
-                              msg, 'face-monkey').show()
-        retcode  = os.system('espeak "%s" >/dev/null 2>&1 &' % msg)
+        if lang != '':
+          lang = '-v ' + lang
+        retcode  = os.system('espeak {0} "{1}" >/dev/null 2>&1 &'.format(lang, msg))
+        #FIXME generally retcode won't work with async exec
         if retcode != 0:
-          sys.stderr.write("some problem occurred with espeak.");
-          sys.stderr.write("trying again with error messages enabled.")
-          os.system('espeak "%s" &' % msg)
-
+            sys.stderr.write("some problem occurred with espeak.")
+            sys.stderr.write("trying again with error messages enabled.")
+            os.system('espeak {0} "{1}" >/dev/null 2>&1'.format(lang, msg))
 #
 # AA HTTP Sender
 #
@@ -518,7 +510,7 @@ class Console():
         # log a stop session action
         self.logger.log('stop')
         # the daemon notifies that the session is finished
-        self.daemon.notify_english('Your session has finished. Dont forget to record your screencast.')
+        self.daemon.notify('Your session has finished. Dont forget to record your screencast.','')
         # kill the daemon
         self.daemon.stop()
 
@@ -548,8 +540,8 @@ class Console():
         # send all the lines at ~/.aa.log file
         self.http_sender.send_log()
         # notify to the user the push action
-#        self.daemon.notify_english('Session pushed to the server. Now get away of this fucking laptop and go fuck.')
-        self.daemon.notify_english('Session pushed to the server.')
+#        self.daemon.notify('Session pushed to the server. Now get away of this fucking laptop and go fuck.')
+        self.daemon.notify('Session pushed to the server.','')
 
     # FIXME: I'm tired now, but this would be more interesting in a proper class
     def get_trac_tickets(self, sf_user=None):
