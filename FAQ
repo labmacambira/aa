@@ -1,0 +1,11 @@
+
+COMMON LINUX/UNlX PROBLEMS & SOLUTIONS
+
+1) AA's alarm speech is very delayed compared to the textual notification banner
+  
+   In Ubuntu 11.10 (and 12.04 as well, it seems) this is caused by a strage
+   Ubuntu bug when having bluez-alsa installed. You should uninstall bluez-alsa.
+   Here is the Ubuntu bug page:
+   https://bugs.launchpad.net/ubuntu/+source/bluez/+bug/1025578
+
+
