@@ -401,7 +401,7 @@ class AADaemon(Daemon):
         #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
         pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
                               msg, 'face-monkey').show()
-        os.system('espeak -v pt "%s"' % msg)
+        os.system('espeak -v pt "%s"&' % msg)
 
     def notify_english(self, msg):
         """
@@ -410,7 +410,7 @@ class AADaemon(Daemon):
         #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
         pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
                               msg, 'face-monkey').show()
-        os.system('espeak "%s"' % msg)
+        os.system('espeak "%s"&' % msg)
 
 #
 # AA HTTP Sender
