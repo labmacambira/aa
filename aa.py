@@ -410,7 +410,11 @@ class AADaemon(Daemon):
         #os.system('notify-send "AA [%s]: " "%s"' % (time.strftime("%Y-%m-%d %H-%M-%S"), msg))
         pynotify.Notification("AA [%s]" % time.strftime("%Y-%m-%d %H-%M-%S"),
                               msg, 'face-monkey').show()
-        os.system('espeak "%s"&' % msg)
+        retcode  = os.system('espeak "%s" >/dev/null 2>&1 &' % msg)
+        if retcode != 0:
+          sys.stderr.write("some problem occurred with espeak.");
+          sys.stderr.write("trying again with error messages enabled.")
+          os.system('espeak "%s" &' % msg)
 
 #
 # AA HTTP Sender
